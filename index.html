@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Stored Procedure pada Database AKADEMIK</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+    }
+
+    .container{
+      width: 85%;
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    h2{
+      color: #34495e;
+      margin-top: 30px;
+    }
+
+    p{
+      text-align: justify;
+    }
+
+    pre{
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+
+    code{
+      font-family: Consolas, monospace;
+    }
+
+    .footer{
+      margin-top: 40px;
+      text-align: center;
+      color: gray;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Memahami Stored Procedure pada Database AKADEMIK</h1>
+
+    <p>
+      Pada praktikum minggu ini saya mempelajari tentang Stored Procedure pada database.
+      Stored Procedure adalah kumpulan query SQL yang disimpan di dalam database dan dapat
+      dipanggil kembali menggunakan nama procedure. Dengan menggunakan Stored Procedure,
+      query menjadi lebih rapi, mudah digunakan kembali, dan proses pengolahan data menjadi
+      lebih efisien.
+    </p>
+
+    <p>
+      Pada praktikum ini digunakan database AKADEMIK yang memiliki beberapa tabel seperti
+      <b>mahasiswa</b>, <b>prodi</b>, <b>dosen</b>, <b>jenjang</b>, dan
+      <b>status_akademik</b>. Saya belajar membuat procedure tanpa parameter dan procedure
+      dengan parameter <b>IN</b>. Selain itu saya juga mempelajari penggunaan
+      <b>ORDER BY</b>, <b>LIMIT</b>, fungsi agregat <b>COUNT</b>, dan <b>JOIN</b>.
+    </p>
+
+    <h2>Contoh Query 1</h2>
+
+    <p>
+      Query berikut digunakan untuk menampilkan data program studi dari tabel prodi
+      yang diurutkan berdasarkan nama prodi.
+    </p>
+
+    <pre><code>
+CREATE PROCEDURE tampilNamaProdi()
+BEGIN
+  SELECT idprodi, nmprodi
+  FROM prodi
+  ORDER BY nmprodi;
+END;
+
+CALL tampilNamaProdi();
+    </code></pre>
+
+    <p>
+      Dari hasil output, data program studi berhasil ditampilkan sesuai urutan alfabet.
+      Procedure tanpa parameter ini mempermudah pengguna untuk melihat seluruh data prodi.
+    </p>
+
+    <h2>Contoh Query 2</h2>
+
+    <p>
+      Query berikut digunakan untuk menampilkan data dosen berdasarkan program studi
+      dan pendidikan terakhir dosen.
+    </p>
+
+    <pre><code>
+CREATE PROCEDURE getDosenByProdiPendidikan(
+  IN p_idprodi INT,
+  IN p_idpendidikan INT
+)
+BEGIN
+  SELECT nmdosen, gelar
+  FROM dosen
+  WHERE idprodi = p_idprodi
+    AND idpendidikan = p_idpendidikan
+  ORDER BY nmdosen;
+END;
+
+CALL getDosenByProdiPendidikan(1,2);
+    </code></pre>
+
+    <p>
+      Melalui query tersebut saya memahami bahwa parameter dapat digunakan untuk
+      memfilter data sesuai kebutuhan pengguna. Procedure ini mempermudah pencarian
+      data dosen berdasarkan kondisi tertentu.
+    </p>
+
+    <h2>Refleksi Praktikum</h2>
+
+    <p>
+      Hal yang cukup sulit saat praktikum adalah memahami perbedaan sintaks antara
+      simulator SQL.js dan SQL Server. Pada simulator digunakan perintah
+      <b>CALL</b>, sedangkan pada SQL Server menggunakan <b>EXEC</b>.
+      Selain itu, beberapa sintaks seperti <b>LIMIT</b> juga perlu disesuaikan agar
+      dapat berjalan dengan baik di simulator.
+    </p>
+
+    <p>
+      Tips yang membantu saya selama praktikum adalah memahami struktur tabel terlebih
+      dahulu sebelum membuat procedure. Dengan memahami relasi antar tabel, proses
+      pembuatan query menjadi lebih mudah dan mengurangi kesalahan saat menjalankan procedure.
+    </p>
+
+    <h2>Kesimpulan</h2>
+
+    <p>
+      Dari praktikum ini saya dapat memahami bahwa Stored Procedure sangat berguna
+      untuk menyimpan query yang sering digunakan sehingga pengolahan data menjadi
+      lebih efektif, terstruktur, dan mudah dipanggil kembali kapan saja.
+    </p>
+
+  </div>
+
+</body>
+</html>
